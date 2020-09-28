@@ -1,23 +1,17 @@
 package com.example;
 
 import io.micronaut.core.annotation.Introspected;
-
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 @Introspected
 public class Person {
-@NotBlank
-@Size(min=3)
-//@JsonProperty()
-private String name;
-@NotBlank
-//@JsonProperty()
-private String password;
 
-private int age;
+    @NotBlank
+    private String name;
+    @NotBlank
+    private String password;
 
-
+    private int age;
 
     public String getName() {
         return name;
@@ -43,12 +37,9 @@ private int age;
         this.age = age;
     }
 
-    @Override
-    public String toString() {
-        return "Person{" +
-                "name='" + name + '\'' +
-                ", password='" + password + '\'' +
-                ", age='" + age + '\'' +
-                '}';
+    public static Person hidePassword(Person person) {
+        person.setPassword(person.getPassword().replaceAll("[^0-9]", "*"));
+        return person;
+
     }
 }

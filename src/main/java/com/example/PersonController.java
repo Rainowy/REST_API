@@ -12,11 +12,9 @@ import io.micronaut.http.annotation.Controller;
 import io.micronaut.validation.Validated;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
-import io.reactivex.functions.Function;
 import org.bson.conversions.Bson;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Controller("/people")
 @Validated
@@ -36,92 +34,21 @@ public class PersonController implements PersonInterface {
     }
 
     @Override
-    public Single<List<Person>> findAll() {
+    public Flowable<Person> findAll() {
 
-//        List<Person> products = new ArrayList<Person>();
-//        FindPublisher<Person> cur = getCollection().find();
-//        while(cur.hasNext()) {
-//            products.add(cur.next());
-//        }
-
-        return Flowable.fromPublisher(
-                getCollection()
-                        .find())
-                .toList();
-
-
-//                .map(person -> person.getPassword().replaceAll("[abc]","*"));
-
-
-
-
+        return Flowable.fromPublisher(getCollection()
+                .find())
+                .map(Person::hidePassword);
     }
 
-
     @Override
-    public Flowable<Object> findOne(String name, String pageSize, String pageNumber, String sort) {
-//        return Flowable.fromPublisher(
-//                getCollection()
-////               .find().sort({ "s": -1, "_id": 1 }).skip(<page-1>).limit(<pageSize>)
-//                        .find(Filters.eq("name", name))
-//                        .sort(Sorts.ascending("name"))
-//                        .limit(3)
-//
-//        ).toList();
-
-
-        Flowable<Object> personFlowable =  Flowable.fromPublisher(getCollection()
+    public Flowable<Person> findByName(String name, String pageSize, String pageNumber, String sortOrder) {
+        return Flowable.fromPublisher(getCollection()
                 .find(Filters.eq("name", name))
-                .sort(sort.isEmpty() ? (Sorts.ascending("_id")) : Sorts.descending("_id"))
-                .skip(pageNumber.isEmpty() ? (0) : Integer.valueOf(pageNumber))
-                .limit(pageSize.isEmpty() ? (0) : Integer.valueOf(pageSize)))
-//                .map( person -> person.getPassword().replaceAll("[^0-9]","*"),
-//
-//                        );
-                .map(new Function<Person, Person>() {
-                         @Override
-                         public Person apply(Person person) throws Exception {
-                             person.setPassword(person.getPassword().replaceAll("[^0-9]","*"));
-                             return person;
-                         }
-                     });
-//                    @Override
-//                    public User apply(User user) throws Exception {
-//                        // modifying user object by adding email address
-//                        // turning user name to uppercase
-////                        user.setEmail(String.format("%s@rxjava.wtf", user.getName()));
-////                        user.setName(user.getName().toUpperCase());
-//                        return user;
-//                    }
-//                });
-//        .map(person ->
-//                person.setName(person.getName()));
-
-
-
-//                .map(
-//                    @Override
-//                    public Person apply(Person person) {
-//                        // modifying user object by adding email address
-//                        // turning user name to uppercase
-//                        person.setName(person.getName());
-//                        person.setPassword(person.getPassword());
-//                        return person;
-//                    }
-//                });
-
-//        System.out.println(personFlowable.toList().map(person -> person.getPassword().replaceAll("[.]","*"))
-//
-//
-//        ArrayList<Person> people = new ArrayList<>();
-
-//        personFlowable.fromArray()
-
-//        return personFlowable;
-
-//
-//        System.out.println(personFlowable);
-        return personFlowable;
+                .sort(sortOrder.isEmpty() ? (Sorts.ascending("_id")) : Sorts.descending("_id"))
+                .skip(pageNumber.isEmpty() ? (1) : Integer.valueOf(pageNumber))
+                .limit(pageSize.isEmpty() ? (20) : Integer.valueOf(pageSize)))
+                .map(Person::hidePassword);
 
     }
 
@@ -149,6 +76,12 @@ public class PersonController implements PersonInterface {
                 .getCollection("samochody", Person.class);
 
     }
+
+//    //    @Override
+//    public Person apply(Person person) {
+//        person.setPassword(person.getPassword().replaceAll("[^0-9]", "*"));
+//        return person;
+//    }
 }
 
 

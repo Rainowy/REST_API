@@ -25,7 +25,7 @@ public class PersonControllerTest {
         person.setPassword("jake");
         person.setAge(33);
         person = client.toBlocking().retrieve(HttpRequest.POST("/people", person), Person.class);
-        Person personCheck = client.toBlocking().retrieve(HttpRequest.GET("/people/" + person.getName() + "?pageSize=&pageNumber=&sort="), Person.class);
+        Person personCheck = client.toBlocking().retrieve(HttpRequest.GET("/people/" + person.getName() + "?pageSize=&pageNumber=&sortOrder="), Person.class);
         Assertions.assertEquals(person.getName(), personCheck.getName());
 //        Assertions.assertEquals(Integer.valueOf(1), person.getId());
 //        Assertions.assertThrows(HttpClientResponseException.class,
@@ -51,14 +51,14 @@ public class PersonControllerTest {
     @Test
     public void testFindByName() throws MalformedURLException {
         HttpClient client = HttpClient.create(new URL("http://" + server.getHost() + ":" + server.getPort()));
-        Person person = client.toBlocking().retrieve(HttpRequest.GET("/people/tester?pageSize=&pageNumber=&sort="), Person.class);
+        Person person = client.toBlocking().retrieve(HttpRequest.GET("/people/tester?pageSize=&pageNumber=&sortOrder="), Person.class);
         Assertions.assertNotNull(person);
     }
 
     @Test
     public void deleteOne() throws MalformedURLException {
         HttpClient client = HttpClient.create(new URL("http://" + server.getHost() + ":" + server.getPort()));
-        Person person2 = client.toBlocking().retrieve(HttpRequest.GET("/people/tester?pageSize=&pageNumber=&sort="), Person.class);
+        Person person2 = client.toBlocking().retrieve(HttpRequest.GET("/people/tester?pageSize=&pageNumber=&sortOrder="), Person.class);
         Person person = client.toBlocking().retrieve(HttpRequest.DELETE("/people/tester"), Person.class);
         Assertions.assertNotEquals(person.getName(),person2.getName());
     }
@@ -73,7 +73,7 @@ public class PersonControllerTest {
     @Test
     public void testAllByName() throws MalformedURLException {
         HttpClient client = HttpClient.create(new URL("http://" + server.getHost() + ":" + server.getPort()));
-        Person[] person = client.toBlocking().retrieve(HttpRequest.GET("/people/John?pageSize=&pageNumber=&sort="), Person[].class);
+        Person[] person = client.toBlocking().retrieve(HttpRequest.GET("/people/John?pageSize=&pageNumber=&sortOrder="), Person[].class);
         Assertions.assertNotNull(person);
     }
 }

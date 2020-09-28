@@ -7,19 +7,17 @@ import io.micronaut.http.annotation.Put;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
 
-import java.util.List;
-
 public interface PersonInterface {
 
     @Post
     public Single addOne (Person person);
     @Get
-    public Single<List<Person>> findAll();
+    public Flowable<Person> findAll();
     @Get("/{name}")
-    public Flowable<Object> findOne(String name, String pageSize, String pageNumber, String sort);
-    @Delete("/{name}")
-    public Flowable deleteOne(String name);
+    public Flowable<Person> findByName(String name, String pageSize, String pageNumber, String sort);
     @Put("/{name}")
     public Flowable updateOne(String name, Person person);
+    @Delete("/{name}")
+    public Flowable deleteOne(String name);
 }
 
