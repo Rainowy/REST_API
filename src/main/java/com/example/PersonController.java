@@ -13,7 +13,6 @@ import io.micronaut.validation.Validated;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
 import org.bson.conversions.Bson;
-
 import javax.validation.Valid;
 
 @Controller("/people")
@@ -74,14 +73,7 @@ public class PersonController implements PersonInterface {
         return mongoClient
                 .getDatabase("humans")
                 .getCollection("samochody", Person.class);
-
     }
-
-//    //    @Override
-//    public Person apply(Person person) {
-//        person.setPassword(person.getPassword().replaceAll("[^0-9]", "*"));
-//        return person;
-//    }
 }
 
 

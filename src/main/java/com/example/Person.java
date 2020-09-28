@@ -2,13 +2,16 @@ package com.example;
 
 import io.micronaut.core.annotation.Introspected;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Introspected
 public class Person {
 
     @NotBlank
+    @Size(min=3)
     private String name;
     @NotBlank
+    @Size(min=5, max=10)
     private String password;
 
     private int age;

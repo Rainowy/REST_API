@@ -22,17 +22,12 @@ public class PersonControllerTest {
         HttpClient client = HttpClient.create(new URL("http://" + server.getHost() + ":" + server.getPort()));
         Person person = new Person();
         person.setName("tester");
-        person.setPassword("jake");
+        person.setPassword("jackson");
         person.setAge(33);
         person = client.toBlocking().retrieve(HttpRequest.POST("/people", person), Person.class);
         Person personCheck = client.toBlocking().retrieve(HttpRequest.GET("/people/" + person.getName() + "?pageSize=&pageNumber=&sortOrder="), Person.class);
         Assertions.assertEquals(person.getName(), personCheck.getName());
-//        Assertions.assertEquals(Integer.valueOf(1), person.getId());
-//        Assertions.assertThrows(HttpClientResponseException.class,
-//                () -> client.toBlocking().retrieve(HttpRequest.POST("/people", person), Person.class),
-//                "person.age: must be greater than or equal to 0");
     }
-
 
     @Test
     public void testAddNotValid() throws MalformedURLException {
@@ -42,10 +37,6 @@ public class PersonControllerTest {
         person.setPassword("micronaut");
         person.setAge(33);
         client.toBlocking().retrieve(HttpRequest.POST("/people", person), Person.class);
-
-//        Assertions.assertThrows(HttpClientResponseException.class,
-//                () -> client.toBlocking().retrieve(HttpRequest.POST("/people", person), Person.class),
-//                "person.age: must be greater than or equal to 0");
     }
 
     @Test
