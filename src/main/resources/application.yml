@@ -1,0 +1,9 @@
+micronaut:
+  application:
+    name: mongodb
+    cluster:
+      maxWaitQueueSize: 5
+
+      connectionPool:
+        maxSize: 20
+mongodb.uri: ${MONGO_URL:`mongodb://localhost:27017/`}
