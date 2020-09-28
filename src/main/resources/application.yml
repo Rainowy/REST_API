@@ -6,4 +6,6 @@ micronaut:
 
       connectionPool:
         maxSize: 20
-mongodb.uri: ${MONGO_URL:`mongodb://localhost:27017/`}
+#mongodb.uri: ${MONGO_URL:`mongodb://localhost:27017/`}
+mongodb:
+  uri: mongodb://172.17.0.1:27017/databaseName
