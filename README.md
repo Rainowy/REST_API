@@ -8,7 +8,13 @@
 - Next use 'docker-compose up' and it should be going.
 
 > SIMPLE CRUD (use Postman)
-- http://localhost:8080/people/{"name":"tester","password":"testing","age":20} will save to DB
+- http://localhost:8080/people/
+ {
+     "name": "tester",
+     "password": "micronaut",
+     "age": "16"
+ }
+ will save to DB
 - http://localhost:8080/people/ without name will return all records
 - for searching specific records type name and parameters:
  >http://localhost:8080/people/tester?pageSize=&pageNumber=&sortOrder=
@@ -22,7 +28,12 @@
 - DELETE request with name record will delete it:
 - http://localhost:8080/people/tester
 - PUT request will modify records
-- http://localhost:8080/people/{"name":"ChangedName","password":"ChangedPassword","age":30} 
+- http://localhost:8080/people/
+{
+     "name": "NameChanged",
+     "password": "PassChanged",
+     "age": "16"
+ } 
 
 -I Made testing with K6 framework from docker. Thats, why URL in K6_GET_test.js and K6_POST_test.js in those files is changed to 172.17.0.1 (docker internal ip)
 I was running K6 from terminal with this command:
