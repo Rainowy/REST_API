@@ -2,4 +2,4 @@ micronaut:
   application:
     name: mongodb
 mongodb:
-  uri: mongodb://localhost:27017/people
+  uri: mongodb://172.17.0.1:27017/people

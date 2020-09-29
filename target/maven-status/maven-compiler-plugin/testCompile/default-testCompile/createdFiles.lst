@@ -1,4 +1,0 @@
-META-INF/services/io.micronaut.inject.BeanDefinitionReference
-com/example/$DemoTestDefinition.class
-com/example/DemoTest.class
-com/example/$DemoTestDefinitionClass.class

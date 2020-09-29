@@ -47,7 +47,7 @@ public class PersonController implements Crudable {
         return Flowable.fromPublisher(mongoRepository.getCollection()
                 .find(Filters.eq(this.name, name))
                 .sort(sortOrder.isEmpty() ? (Sorts.ascending(id)) : Sorts.descending(id))
-                .skip(pageNumber.isEmpty() ? (1) : Integer.valueOf(pageNumber))
+                .skip(pageNumber.isEmpty() ? (0) : Integer.valueOf(pageNumber))
                 .limit(pageSize.isEmpty() ? (20) : Integer.valueOf(pageSize)))
                 .map(Person::hidePassword);
     }
