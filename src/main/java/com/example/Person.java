@@ -13,7 +13,6 @@ public class Person {
     @NotBlank
     @Size(min=5, max=10)
     private String password;
-
     private int age;
 
     public String getName() {

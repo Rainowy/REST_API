@@ -2,7 +2,6 @@ package com.example;
 
 import com.mongodb.reactivestreams.client.MongoClient;
 import com.mongodb.reactivestreams.client.MongoCollection;
-
 import javax.inject.Singleton;
 
 @Singleton

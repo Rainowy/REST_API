@@ -14,7 +14,7 @@
      "password": "micronaut",
      "age": "16"
  }
- will save to DB
+ will save record to DB
 - http://localhost:8080/people/ without name will return all records
 - for searching specific records type name and parameters:
  >http://localhost:8080/people/tester?pageSize=&pageNumber=&sortOrder=
@@ -28,7 +28,7 @@
 - DELETE request with name record will delete it:
 - http://localhost:8080/people/tester
 - PUT request will modify records
-- http://localhost:8080/people/
+- http://localhost:8080/people/tester
 {
      "name": "NameChanged",
      "password": "PassChanged",
