@@ -5,8 +5,6 @@ import com.mongodb.client.model.Sorts;
 import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
-import com.mongodb.reactivestreams.client.MongoClient;
-import com.mongodb.reactivestreams.client.MongoCollection;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.validation.Validated;
@@ -17,62 +15,58 @@ import javax.validation.Valid;
 
 @Controller("/people")
 @Validated
-public class PersonController implements PersonInterface {
+public class PersonController implements Crudable {
 
-    private final MongoClient mongoClient;
+    private static final String id = "_id";
+    private static final String name = "name";
+    private static final String password = "password";
+    private static final String age = "age";
 
-    public PersonController(MongoClient mongoClient) {
-        this.mongoClient = mongoClient;
+    private final MongoRepository mongoRepository;
+
+    public PersonController(MongoRepository mongoRepository) {
+        this.mongoRepository = mongoRepository;
     }
 
     @Override
-    public Single addOne(@Body @Valid Person person) {
+    public Single<Person> addOne(@Body @Valid Person person) {
         return Single.fromPublisher(
-                getCollection().insertOne(person)
+                mongoRepository.getCollection().insertOne(person)
         ).map(success -> person);
     }
 
     @Override
     public Flowable<Person> findAll() {
-
-        return Flowable.fromPublisher(getCollection()
+        return Flowable.fromPublisher(mongoRepository.getCollection()
                 .find())
                 .map(Person::hidePassword);
     }
 
     @Override
     public Flowable<Person> findByName(String name, String pageSize, String pageNumber, String sortOrder) {
-        return Flowable.fromPublisher(getCollection()
-                .find(Filters.eq("name", name))
-                .sort(sortOrder.isEmpty() ? (Sorts.ascending("_id")) : Sorts.descending("_id"))
+        return Flowable.fromPublisher(mongoRepository.getCollection()
+                .find(Filters.eq(this.name, name))
+                .sort(sortOrder.isEmpty() ? (Sorts.ascending(id)) : Sorts.descending(id))
                 .skip(pageNumber.isEmpty() ? (1) : Integer.valueOf(pageNumber))
                 .limit(pageSize.isEmpty() ? (20) : Integer.valueOf(pageSize)))
                 .map(Person::hidePassword);
-
     }
 
     @Override
     public Flowable<DeleteResult> deleteOne(String name) {
-        Bson filter = Filters.eq("name", name);
-        return Flowable.fromPublisher(
-                getCollection().deleteOne(filter));
+        Bson filter = Filters.eq(this.name, name);
+        return Flowable.fromPublisher(mongoRepository.getCollection().deleteOne(filter));
     }
 
     @Override
-    public Flowable<UpdateResult> updateOne(String name, @Body @Valid Person person) {
-        return Flowable.fromPublisher(getCollection().updateMany(
-                Filters.eq("name", name),
+    public Flowable<UpdateResult> updateMany(String name, @Body @Valid Person person) {
+        return Flowable.fromPublisher(mongoRepository.getCollection().updateMany(
+                Filters.eq(this.name, name),
                 Updates.combine(
-                        Updates.set("name", person.getName()),
-                        Updates.set("password", person.getPassword()),
-                        Updates.set("age", person.getAge()))
+                        Updates.set(this.name, person.getName()),
+                        Updates.set(password, person.getPassword()),
+                        Updates.set(age, person.getAge()))
         ));
-    }
-
-    private MongoCollection<Person> getCollection() {
-        return mongoClient
-                .getDatabase("humans")
-                .getCollection("samochody", Person.class);
     }
 }
 
