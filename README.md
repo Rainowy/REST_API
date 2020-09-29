@@ -35,7 +35,7 @@
      "age": "16"
  } 
 
--I Made testing with K6 framework from docker. Thats, why URL in K6_GET_test.js and K6_POST_test.js in those files is changed to 172.17.0.1 (docker internal ip)
+> I Made testing with K6 framework from docker. Thats, why URL in K6_GET_test.js and K6_POST_test.js in those files is changed to 172.17.0.1 (docker internal ip)
 I was running K6 from terminal with this command:
 -  docker run -i loadimpact/k6 run --vus 1000 --iterations 10000 - <K6_GET_test.js
 
