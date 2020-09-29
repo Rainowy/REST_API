@@ -2,10 +2,10 @@
 
 > Simple Microservice using Java 14, Micronaut and MongoDB database
 
-- I am using docker compose to run mongo and this api containers from localhost.
-- First build jar with  'mvn package  -Dmaven.test.skip=true'
-- Next build docker image from jar  'docker build -t api-docker-image .'
-- Next use 'docker-compose up' and it should be going.
+- I am using docker compose to run mongo and micronaut containers from localhost.
+- First build jar with  **mvn package  -Dmaven.test.skip=true**
+- Next build docker image from jar  **docker build -t api-docker-image .**
+- Next use **docker-compose up** and it should be going.
 
 > SIMPLE CRUD (use Postman)
 - http://localhost:8080/people/
