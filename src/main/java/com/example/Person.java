@@ -40,8 +40,7 @@ public class Person {
     }
 
     public static Person hidePassword(Person person) {
-        person.setPassword(person.getPassword().replaceAll("[^0-9]", "*"));
+        person.setPassword(person.getPassword().replaceAll(".", "*"));
         return person;
-
     }
 }
