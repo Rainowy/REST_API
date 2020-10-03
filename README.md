@@ -1,6 +1,6 @@
 # REST_API
 
-> Simple Microservice using Java 14, Micronaut and MongoDB database
+> Simple Microservice using Java 13, Micronaut and MongoDB database
 
 - I am using docker compose to run mongo and micronaut containers from localhost.
 - First build jar with  **mvn package  -Dmaven.test.skip=true**

@@ -30,9 +30,8 @@ public class PersonController implements Crudable {
 
     @Override
     public Single<Person> addOne(@Body @Valid Person person) {
-        return Single.fromPublisher(
-                mongoRepository.getCollection().insertOne(person)
-        ).map(success -> person);
+        return Single.fromPublisher(mongoRepository.getCollection().insertOne(person))
+                .map(success -> person);
     }
 
     @Override
