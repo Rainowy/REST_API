@@ -11,6 +11,7 @@ import io.micronaut.validation.Validated;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
 import org.bson.conversions.Bson;
+
 import javax.validation.Valid;
 
 @Controller("/people")
@@ -31,8 +32,9 @@ public class PersonController implements Crudable {
     @Override
     public Single<Person> addOne(@Body @Valid Person person) {
         return Single.fromPublisher(
-                mongoRepository.getCollection().insertOne(person)
-        ).map(success -> person);
+                mongoRepository.getCollection()
+                        .insertOne(person))
+                .map(success -> person);
     }
 
     @Override
@@ -47,7 +49,7 @@ public class PersonController implements Crudable {
         return Flowable.fromPublisher(mongoRepository.getCollection()
                 .find(Filters.eq(this.name, name))
                 .sort(sortOrder.isEmpty() ? (Sorts.ascending(id)) : Sorts.descending(id))
-                .skip(pageNumber.isEmpty() ? (1) : Integer.valueOf(pageNumber))
+                .skip(pageNumber.isEmpty() || Integer.valueOf(pageNumber) == 0 ? (0) : Integer.valueOf(pageNumber)  -1)
                 .limit(pageSize.isEmpty() ? (20) : Integer.valueOf(pageSize)))
                 .map(Person::hidePassword);
     }
