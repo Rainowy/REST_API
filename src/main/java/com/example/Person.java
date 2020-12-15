@@ -7,6 +7,7 @@ import javax.validation.constraints.Size;
 @Introspected
 public class Person {
 
+    private Long id;
     @NotBlank
     @Size(min=3)
     private String name;
@@ -36,13 +37,14 @@ public class Person {
         return age;
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
+    public void setAge(int age) {this.age = age; }
+
+    public Long getId() {return id;}
+
+    public void setId(Long id) {this.id = id;}
 
     public static Person hidePassword(Person person) {
         person.setPassword(person.getPassword().replaceAll("[^0-9]", "*"));
         return person;
-
     }
 }
