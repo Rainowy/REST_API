@@ -2,7 +2,7 @@ package com.example;
 
 import com.mongodb.reactivestreams.client.MongoClient;
 import com.mongodb.reactivestreams.client.MongoCollection;
-import io.micronaut.core.annotation.Introspected;
+import org.bson.Document;
 
 import javax.inject.Singleton;
 
@@ -20,4 +20,21 @@ public class MongoRepository {
                 .getDatabase("humans")
                 .getCollection("people", Person.class);
     }
+
+    public MongoCollection<Counters> getCounterCollection(){
+        return mongoClient
+                .getDatabase("humans")
+                .getCollection("counters", Counters.class);
+    }
+
+    public Document getNative(){
+        return (Document) mongoClient.getDatabase("humans");
+
+    }
+
+//    private MongoClient connectToDatabase(MongoConnection connection) {
+//        return new MongoClient(new MongoClientURI("mongodb://user:password@127.0.0.1:27017/database?authMode=scram-sha1"));
+//    }
+
+
 }

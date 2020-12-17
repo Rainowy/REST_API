@@ -12,7 +12,7 @@ import io.reactivex.Single;
 public interface Crudable {
 
     @Post
-    Single<Person> addOne (Person person);
+    Single<Person> addOne (Person person) throws Exception;
     @Get
     Flowable<Person> findAll();
     @Get("/{name}")

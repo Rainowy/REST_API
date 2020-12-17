@@ -4,8 +4,12 @@ import io.micronaut.core.annotation.Introspected;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+
 @Introspected
 public class Person {
+
+
+    public static final String SEQUENCE_NAME = "users_sequence";
 
     private Long id;
     @NotBlank
