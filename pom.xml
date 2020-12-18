@@ -83,10 +83,6 @@
       <groupId>io.micronaut.mongodb</groupId>
       <artifactId>micronaut-mongo-reactive</artifactId>
     </dependency>
-    <dependency>
-      <groupId>io.micronaut.mongodb</groupId>
-      <artifactId>micronaut-mongo-sync</artifactId>
-    </dependency>
   </dependencies>
 
   <build>

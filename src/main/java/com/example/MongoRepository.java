@@ -1,8 +1,9 @@
 package com.example;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.reactivestreams.client.MongoClient;
 import com.mongodb.reactivestreams.client.MongoCollection;
-import org.bson.Document;
+import io.reactivex.Flowable;
 
 import javax.inject.Singleton;
 
@@ -21,20 +22,21 @@ public class MongoRepository {
                 .getCollection("people", Person.class);
     }
 
-    public MongoCollection<Counters> getCounterCollection(){
+    public MongoCollection<Counters> getCountersCollection(){
         return mongoClient
                 .getDatabase("humans")
                 .getCollection("counters", Counters.class);
     }
 
-    public Document getNative(){
-        return (Document) mongoClient.getDatabase("humans");
+    public Long getNextSequence(String name){
+        BasicDBObject find = new BasicDBObject();
+        find.put("_id", name);
+        BasicDBObject update = new BasicDBObject();
+        update.put("$inc", new BasicDBObject("seq", 1));
 
+        return Flowable.fromPublisher(getCountersCollection()
+                .findOneAndUpdate(find, update))
+                .map(Counters::getSeq)
+                .blockingFirst();
     }
-
-//    private MongoClient connectToDatabase(MongoConnection connection) {
-//        return new MongoClient(new MongoClientURI("mongodb://user:password@127.0.0.1:27017/database?authMode=scram-sha1"));
-//    }
-
-
 }
