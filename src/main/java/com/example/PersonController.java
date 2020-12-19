@@ -45,13 +45,22 @@ public class PersonController implements Crudable {
                 .map(Person::hidePassword);
     }
 
+
     @Override
     public Flowable<Person> findByName(String name, String pageSize, String pageNumber, String sortOrder) {
         return Flowable.fromPublisher(mongoRepository.getCollection()
                 .find(Filters.eq(this.name, name))
-                .sort(sortOrder.isEmpty() ? (Sorts.ascending(id)) : Sorts.descending(id))
+                .sort(sortOrder.isEmpty() ? (Sorts.ascending(
+                        id)) : Sorts.descending(id))
                 .skip(pageNumber.isEmpty() || Integer.valueOf(pageNumber) == 0 ? (0) : Integer.valueOf(pageNumber) - 1)
                 .limit(pageSize.isEmpty() ? (20) : Integer.valueOf(pageSize)))
+                .map(Person::hidePassword);
+    }
+
+    @Override
+    public Flowable<Person> findById(Long id){
+        return Flowable.fromPublisher(mongoRepository.getCollection()
+                .find(Filters.eq(id)))
                 .map(Person::hidePassword);
     }
 

@@ -17,6 +17,8 @@ public interface Crudable {
     Flowable<Person> findAll();
     @Get("/{name}")
     Flowable<Person> findByName(String name, String pageSize, String pageNumber, String sort);
+    @Get("/id")
+    Flowable<Person> findById(Long id);
     @Put("/{name}")
     Flowable<UpdateResult> updateMany(String name, Person person);
     @Delete("/{name}")
