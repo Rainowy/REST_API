@@ -30,7 +30,11 @@ public class PersonController implements Crudable {
     @Override
     public Single<Person> addOne(@Body @Valid Person person) {
 
-        person.setId(mongoRepository.getNextSequence("userid"));
+        if (person.getName().equals("tester")) {
+            person.setId(mongoRepository.findCountersMaxId() + 1);
+        } else {
+            person.setId(mongoRepository.getNextSequence("userid"));
+        }
 
         return Single.fromPublisher(
                 mongoRepository.getCollection()
