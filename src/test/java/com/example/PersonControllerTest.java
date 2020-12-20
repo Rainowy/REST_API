@@ -5,13 +5,13 @@ import io.micronaut.http.client.RxHttpClient;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.http.client.exceptions.HttpClientResponseException;
 import io.micronaut.test.annotation.MicronautTest;
+import io.reactivex.Flowable;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import javax.inject.Inject;
 import javax.validation.constraints.AssertFalse;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @MicronautTest
 public class PersonControllerTest {
@@ -19,29 +19,36 @@ public class PersonControllerTest {
     @Inject
     @Client("/")
     RxHttpClient client;
+    @Inject
+    MongoRepository mongoRepository;
 
     @Test
     public void testAdd() {
 
-        Person[] people = testFindAll();
+        Person[] people = findAllPeople();
 
         Person person = new Person();
         person.setName("tester");
         person.setPassword("jackson");
         person.setAge(33);
         person = client.toBlocking().retrieve(HttpRequest.POST("/people", person), Person.class);
-        System.out.println(person.getId());
 
         // Test to check if new person id already exist in DB
-        boolean answer = false;
+        boolean exist = false;
         for (int i = 0; i <people.length ; i++) {
             if(person.getId() == people[i].getId()){
-                answer = true;
+                exist = true;
             }
         }
-        Assertions.assertFalse(answer);
+        Assertions.assertFalse(exist);
         Assertions.assertNotNull(person);
+    }
 
+    @Test
+    public void deleteOne() {
+        Person[] persons = client.toBlocking().retrieve(HttpRequest.GET("/people/tester?pageSize=&pageNumber=&sortOrder="), Person[].class);
+        Person person = client.toBlocking().retrieve(HttpRequest.DELETE("/people/tester"), Person.class);
+        Assertions.assertNotEquals(person.getName(),persons[0].getName());
     }
 
     @Test
@@ -57,18 +64,19 @@ public class PersonControllerTest {
     }
 
     @Test
-    public void deleteOne() {
-        Person[] persons = client.toBlocking().retrieve(HttpRequest.GET("/people/tester?pageSize=&pageNumber=&sortOrder="), Person[].class);
-        Person person = client.toBlocking().retrieve(HttpRequest.DELETE("/people/tester"), Person.class);
-        Assertions.assertNotEquals(person.getName(),persons[0].getName());
+    public void findById(){
+        Person person = client.toBlocking().retrieve(HttpRequest.GET("/people/id?id=20"), Person.class);
+        assertEquals("IdTester",person.getName());
     }
 
-    @Test
-    public Person[] testFindAll() {
-        Person[] persons = client.toBlocking().retrieve(HttpRequest.GET("/people"), Person[].class);
-//        assertEquals(15, persons.length);
-        return persons;
-    }
+
+//
+//    @Test
+//    public void testFindAll() {
+//        Person[] persons = client.toBlocking().retrieve(HttpRequest.GET("/people"), Person[].class);
+//        assertEquals(34, findAllPeople().length -1);
+////        return persons;
+//    }
 
     @Test
     public void testAllByName() {
@@ -78,9 +86,17 @@ public class PersonControllerTest {
 
     @Test
     public void findMaxId(){
+        Flowable<Counters> countersFlowable = Flowable.fromPublisher(mongoRepository.getCountersCollection()
+                .find().first());
+
+        Counters counters = countersFlowable.blockingFirst();
+
+        System.out.println(counters.getSeq());
+
+
         Person[] persons = client.toBlocking().retrieve(HttpRequest.GET("/people"), Person[].class);
         Long maxId = persons[persons.length - 1].getId();
-        assertEquals(20,maxId);
+        assertNotEquals(counters.getSeq(),maxId);
     }
 
     public Person blankName(){
@@ -89,5 +105,9 @@ public class PersonControllerTest {
         person.setPassword("micronaut");
         person.setAge(10);
         return person;
+    }
+
+    public Person[] findAllPeople(){
+        return client.toBlocking().retrieve(HttpRequest.GET("/people"), Person[].class);
     }
 }

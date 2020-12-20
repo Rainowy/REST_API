@@ -30,7 +30,7 @@ public class PersonController implements Crudable {
     @Override
     public Single<Person> addOne(@Body @Valid Person person) {
 
-        person.setId (mongoRepository.getNextSequence("userid"));
+        person.setId(mongoRepository.getNextSequence("userid"));
 
         return Single.fromPublisher(
                 mongoRepository.getCollection()
@@ -45,7 +45,6 @@ public class PersonController implements Crudable {
                 .map(Person::hidePassword);
     }
 
-
     @Override
     public Flowable<Person> findByName(String name, String pageSize, String pageNumber, String sortOrder) {
         return Flowable.fromPublisher(mongoRepository.getCollection()
@@ -58,7 +57,7 @@ public class PersonController implements Crudable {
     }
 
     @Override
-    public Flowable<Person> findById(Long id){
+    public Flowable<Person> findById(Long id) {
         return Flowable.fromPublisher(mongoRepository.getCollection()
                 .find(Filters.eq(id)))
                 .map(Person::hidePassword);
@@ -76,6 +75,17 @@ public class PersonController implements Crudable {
                 Filters.eq(this.name, name),
                 Updates.combine(
                         Updates.set(this.name, person.getName()),
+                        Updates.set(password, person.getPassword()),
+                        Updates.set(age, person.getAge()))
+        ));
+    }
+
+    @Override
+    public Flowable<UpdateResult> updateById(@Body @Valid Person person) {
+        return Flowable.fromPublisher(mongoRepository.getCollection().updateOne(
+                Filters.eq(person.getId()),
+                Updates.combine(
+                        Updates.set(name, person.getName()),
                         Updates.set(password, person.getPassword()),
                         Updates.set(age, person.getAge()))
         ));

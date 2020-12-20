@@ -21,6 +21,8 @@ public interface Crudable {
     Flowable<Person> findById(Long id);
     @Put("/{name}")
     Flowable<UpdateResult> updateMany(String name, Person person);
+    @Put("/update")
+    Flowable<UpdateResult> updateById(Person person);
     @Delete("/{name}")
     Flowable<DeleteResult> deleteOne(String name);
 }
