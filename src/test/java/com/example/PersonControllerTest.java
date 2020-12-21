@@ -53,22 +53,20 @@ public class PersonControllerTest {
 
     @Test
     public void testFindByName() {
-        Person person = client.toBlocking().retrieve(HttpRequest.GET("/people/tester?pageSize=&pageNumber=&sortOrder="), Person.class);
-//        Assertions.assertArrayEquals( person., new Person[1]);
+        Person person = client.toBlocking().retrieve(HttpRequest.GET("/people/tester?pageSize=0&pageNumber=0&sortOrder="), Person.class);
         Assertions.assertNotNull(person);
-        System.out.println(person);
     }
 
     @Test
     public void testAllByName() {
-        Person[] persons = client.toBlocking().retrieve(HttpRequest.GET("/people/tester?pageSize=&pageNumber=&sortOrder="), Person[].class);
+        Person[] persons = client.toBlocking().retrieve(HttpRequest.GET("/people/tester?pageSize=0&pageNumber=0&sortOrder="), Person[].class);
         Assertions.assertNotNull(persons);
     }
 
 
     @Test
     public void deleteOne() {
-        Person[] persons = client.toBlocking().retrieve(HttpRequest.GET("/people/tester?pageSize=&pageNumber=&sortOrder="), Person[].class);
+        Person[] persons = client.toBlocking().retrieve(HttpRequest.GET("/people/tester?pageSize=0&pageNumber=0&sortOrder="), Person[].class);
         Person person = client.toBlocking().retrieve(HttpRequest.DELETE("/people/tester"), Person.class);
         Assertions.assertNotEquals(person.getName(), persons[0].getName());
     }
@@ -98,13 +96,10 @@ public class PersonControllerTest {
         assertEquals("person.name: must not be blank", exception.getMessage());
     }
 
-
-//
 //    @Test
 //    public void testFindAll() {
 //        Person[] persons = client.toBlocking().retrieve(HttpRequest.GET("/people"), Person[].class);
 //        assertEquals(34, findAllPeople().length -1);
-////        return persons;
 //    }
 
 
