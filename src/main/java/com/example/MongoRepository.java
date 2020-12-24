@@ -57,9 +57,18 @@ public class MongoRepository {
                 .getId();
     }
 
-//    public Flowable<Counters> updateCountersCollection(){
-//
-//        return
-//    }
+public void setPreviousId() {
+
+    BasicDBObject find = new BasicDBObject();
+    find.put("_id", "userid");
+    BasicDBObject update = new BasicDBObject();
+    update.put("seq", findCountersMaxId() - 1);
+
+        Flowable.fromPublisher(getCountersCollection()
+                .findOneAndUpdate(find,update));
+
+
+
+    }
 
 }

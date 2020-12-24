@@ -69,6 +69,7 @@ public class PersonControllerTest {
         Person[] persons = client.toBlocking().retrieve(HttpRequest.GET("/people/tester?pageSize=0&pageNumber=0&sortOrder="), Person[].class);
         Person person = client.toBlocking().retrieve(HttpRequest.DELETE("/people/tester"), Person.class);
         Assertions.assertNotEquals(person.getName(), persons[0].getName());
+        mongoRepository.setPreviousId();
     }
 
 //    @Test
