@@ -1,0 +1,3 @@
+FROM mongo:3.2.4
+COPY init.js /init.js
+CMD mongoimport --host api-database --db humans --collection people --type js --file /init.js 
