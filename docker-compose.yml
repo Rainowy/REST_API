@@ -6,12 +6,12 @@ services:
     ports:
       - 27017:27017
     command: --smallfiles
-#  api:
-#    image: api-docker-image
-#    ports:
-#      - 8080:8080
-#    links:
-#      - api-database
+ # api:
+  #  image: api-docker-image
+ #   ports:
+  #    - 8080:8080
+ #   links:
+ #     - api-database
 
 #added by Tomek
   mongo-seed:

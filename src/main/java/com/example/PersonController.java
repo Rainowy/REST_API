@@ -35,7 +35,7 @@ public class PersonController implements Crudable {
 //        } else {
 //            person.setId(mongoRepository.getNextSequence("userid"));
 //        }
-        person.setId(mongoRepository.getNextSequence("userid"));
+        person.setId(mongoRepository.getNextSequence("userid", true));
 
 
         return Single.fromPublisher(
