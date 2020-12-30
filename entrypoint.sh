@@ -1,1 +1,5 @@
-#!/usr/bin/env bashecho Running Java App!#java -jar demo.jarjava -Xmx128m - jar -Dmicronaut.environments=docker demo.jar
+#!/bin/sh
+
+echo Running Java App!
+
+java -Xmx128m -jar -Dmicronaut.environments=docker Micro_Rest.jar

@@ -9,13 +9,15 @@ COPY /src /app/src
 
 COPY pom.xml /app/pom.xml
 
-RUN mvn -f /app/pom.xml install
+RUN mvn -f /app/pom.xml install -DskipTests
+
+#-Dmaven.test.skip=true
 
 FROM openjdk:14-alpine
 
 RUN java -version
 
-COPY --from=BUILD /app/target/demo-*.jar /demo.jar
+COPY --from=BUILD /app/target/Micro_Rest-*.jar /Micro_Rest.jar
 
 COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh

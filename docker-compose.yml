@@ -23,36 +23,26 @@ services:
     networks:
       - api-bridge
 
-
-  demo:
+  rest:
     build:
       context: .
-    container_name: demo
+    container_name: rest_api
     ports:
       - 8080:8080
     restart: on-failure
     depends_on:
       - mongodb
+      - mongo-seed
     networks:
       - api-bridge
     entrypoint: ./entrypoint.sh
-  #    environment:
-  #      - ENV=loc
-  #    command: tail -f /dev/null
-
-
-
-  #     links:
-  #       - api-database
-
-
 
   #added by Tomek
-#  mongo-seed:
-#    build: ./mongo-seed
-#    #    links:
-#    #      - api-database
-#    networks:
-#      - api-bridge
+  mongo-seed:
+    build: ./mongo-seed
+    depends_on:
+      - mongodb
+    networks:
+      - api-bridge
 
 
