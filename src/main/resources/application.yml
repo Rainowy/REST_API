@@ -1,5 +1,9 @@
 micronaut:
   application:
-    name: mongodb
+    name: rest
 mongodb:
+<<<<<<< HEAD
   uri: mongodb://172.17.0.1:27017/people
+=======
+  uri: mongodb://localhost:27017/humans
+>>>>>>> 4d7ad73a111f9e1931b66c033b7df820d295f02c

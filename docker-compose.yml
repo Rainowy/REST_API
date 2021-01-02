@@ -1,16 +1,48 @@
-version: "3"
+version: '3'
+
+networks:
+  api-bridge:
+    driver: bridge
+
 services:
-  api-database:
-    image: mongo:3.2.4
-    container_name: "api-database"
+  #  api-database:
+  #    image: mongo:3.2.4
+  #    container_name: "api-database"
+  #    ports:
+  #      - 27017:27017
+  #    command: --smallfiles
+  #    networks:
+  #      - api-net
+  mongodb:
+    image: mongo:4
+    container_name: api-database
     ports:
-      - 27017:27017
-    command: --smallfiles
-  api:
-    image: api-docker-image
+      - 27017-27019:27017-27019
+    volumes:
+      - /tmp/Docker/mongodb:/data/db
+    networks:
+      - api-bridge
+
+  rest:
+    build:
+      context: .
+    container_name: rest_api
     ports:
       - 8080:8080
-    links:
-      - api-database
+    restart: on-failure
+    depends_on:
+      - mongodb
+      - mongo-seed
+    networks:
+      - api-bridge
+    entrypoint: ./entrypoint.sh
+
+  #added by Tomek
+  mongo-seed:
+    build: ./mongo-seed
+    depends_on:
+      - mongodb
+    networks:
+      - api-bridge
 
 
