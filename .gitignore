@@ -4,6 +4,7 @@ Thumbs.db
 build/
 target/
 out/
+.mvn
 .idea
 *.iml
 *.ipr
@@ -11,14 +12,5 @@ out/
 .project
 .settings
 .classpath
-.factorypath
-### Maven ###
-pom.xml.tag
-pom.xml.releaseBackup
-pom.xml.versionsBackup
-pom.xml.next
-release.properties
-dependency-reduced-pom.xml
-buildNumber.properties
-.mvn/timing.properties
-.mvn/wrapper/maven-wrapper.jar
+/mvnw
+/mvnw.bat

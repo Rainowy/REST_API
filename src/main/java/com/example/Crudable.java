@@ -1,5 +1,6 @@
 package com.example;
 
+import com.example.Dto.Person;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import io.micronaut.http.annotation.Delete;
@@ -12,13 +13,17 @@ import io.reactivex.Single;
 public interface Crudable {
 
     @Post
-    Single<Person> addOne (Person person);
+    Single<Person> addOne (Person person) throws Exception;
     @Get
     Flowable<Person> findAll();
     @Get("/{name}")
-    Flowable<Person> findByName(String name, String pageSize, String pageNumber, String sort);
+    Flowable<Person> findByName(String name, int pageSize, int pageNumber, String sort);
+    @Get("/id")
+    Flowable<Person> findById(Long id);
     @Put("/{name}")
     Flowable<UpdateResult> updateMany(String name, Person person);
+    @Put("/update")
+    Flowable<UpdateResult> updateById(Person person);
     @Delete("/{name}")
     Flowable<DeleteResult> deleteOne(String name);
 }
