@@ -1,5 +1,6 @@
 package com.example;
 
+import com.example.Dto.Person;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import io.micronaut.http.annotation.Delete;

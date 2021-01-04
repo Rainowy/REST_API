@@ -1,5 +1,6 @@
 package com.example;
 
+import com.example.Dto.Person;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.client.RxHttpClient;
 import io.micronaut.http.client.annotation.Client;

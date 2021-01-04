@@ -11,8 +11,6 @@ COPY pom.xml /app/pom.xml
 
 RUN mvn -f /app/pom.xml install -DskipTests
 
-#-Dmaven.test.skip=true
-
 FROM openjdk:14-alpine
 
 RUN java -version

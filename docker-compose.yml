@@ -5,14 +5,7 @@ networks:
     driver: bridge
 
 services:
-  #  api-database:
-  #    image: mongo:3.2.4
-  #    container_name: "api-database"
-  #    ports:
-  #      - 27017:27017
-  #    command: --smallfiles
-  #    networks:
-  #      - api-net
+
   mongodb:
     image: mongo:4
     container_name: api-database
@@ -37,7 +30,6 @@ services:
       - api-bridge
     entrypoint: ./entrypoint.sh
 
-  #added by Tomek
   mongo-seed:
     build: ./mongo-seed
     depends_on:

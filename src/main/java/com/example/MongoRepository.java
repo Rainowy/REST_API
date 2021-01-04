@@ -1,5 +1,7 @@
 package com.example;
 
+import com.example.Dto.Counters;
+import com.example.Dto.Person;
 import com.mongodb.BasicDBObject;
 import com.mongodb.reactivestreams.client.MongoClient;
 import com.mongodb.reactivestreams.client.MongoCollection;

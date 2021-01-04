@@ -1,5 +1,6 @@
 package com.example;
 
+import com.example.Dto.Person;
 import com.mongodb.client.model.*;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
@@ -30,14 +31,7 @@ public class PersonController implements Crudable {
     @Override
     public Single<Person> addOne(@Body @Valid Person person) {
 
-//        if (person.getName().equals("tester")) {
-//            person.setId(mongoRepository.findCountersMaxId() + 1);
-//        } else {
-//            person.setId(mongoRepository.getNextSequence("userid"));
-//        }
         person.setId(mongoRepository.getNextSequence("userid", true));
-
-
         return Single.fromPublisher(
                 mongoRepository.getCollection()
                         .insertOne(person))
