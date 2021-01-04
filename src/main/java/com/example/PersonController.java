@@ -30,11 +30,15 @@ public class PersonController implements Crudable {
 
     @Override
     public Single<Person> addOne(@Body @Valid Person person) {
+<<<<<<< HEAD
+        return Single.fromPublisher(mongoRepository.getCollection().insertOne(person))
+=======
 
         person.setId(mongoRepository.getNextSequence("userid", true));
         return Single.fromPublisher(
                 mongoRepository.getCollection()
                         .insertOne(person))
+>>>>>>> 4d7ad73a111f9e1931b66c033b7df820d295f02c
                 .map(success -> person);
     }
 
@@ -50,6 +54,10 @@ public class PersonController implements Crudable {
         return Flowable.fromPublisher(mongoRepository.getCollection()
                 .find(Filters.eq(this.name, name))
                 .sort(sortOrder.isEmpty() ? (Sorts.ascending(id)) : Sorts.descending(id))
+<<<<<<< HEAD
+                .skip(pageNumber.isEmpty() ? (0) : Integer.valueOf(pageNumber))
+                .limit(pageSize.isEmpty() ? (20) : Integer.valueOf(pageSize)))
+=======
                 .skip(pageNumber <= 0 ? (0) : pageNumber)
                 .limit(pageSize <= 0 ? (0) : pageSize))
                 .map(Person::hidePassword);
@@ -59,6 +67,7 @@ public class PersonController implements Crudable {
     public Flowable<Person> findById(Long id) {
         return Flowable.fromPublisher(mongoRepository.getCollection()
                 .find(Filters.eq(id)))
+>>>>>>> 4d7ad73a111f9e1931b66c033b7df820d295f02c
                 .map(Person::hidePassword);
     }
 
