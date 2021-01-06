@@ -68,11 +68,11 @@ public class PersonControllerTest {
         assertEquals("person.name: must not be blank", exception.getMessage());
     }
 
-//    @Test
-//    public void testFindAll() {
-//        Person[] persons = client.toBlocking().retrieve(HttpRequest.GET("/people"), Person[].class);
-//        assertEquals(mongoRepository.findCountersMaxId() -1, findAllPeople().length);
-//    }
+    @Test
+    public void testFindAll() {
+        Person[] persons = client.toBlocking().retrieve(HttpRequest.GET("/people"), Person[].class);
+        assertEquals(mongoRepository.findCountersMaxId() -1, findAllPeople().length);
+    }
 
     public Person blankName() {
         Person person = new Person();

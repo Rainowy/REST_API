@@ -18,6 +18,7 @@
     <micronaut.version>2.0.3</micronaut.version>
     <lombok.version>1.18.16</lombok.version>
     <maven-failsafe-plugin.version>3.0.0-M5</maven-failsafe-plugin.version>
+    <jib.version>2.5.0</jib.version>
     <exec.mainClass>com.example.Application</exec.mainClass>
   </properties>
 
@@ -96,6 +97,16 @@
   <build>
     <plugins>
       <plugin>
+        <groupId>com.google.cloud.tools</groupId>
+        <artifactId>jib-maven-plugin</artifactId>
+        <version>${jib.version}</version>
+        <configuration>
+          <to>
+            <image>registry.hub.docker.com/rainowy/rest-app</image>
+          </to>
+        </configuration>
+      </plugin>
+      <plugin>
         <groupId>io.micronaut.build</groupId>
         <artifactId>micronaut-maven-plugin</artifactId>
       </plugin>
@@ -166,6 +177,4 @@
       </plugin>
     </plugins>
   </build>
-
-
 </project>
