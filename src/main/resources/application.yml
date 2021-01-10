@@ -1,5 +1,9 @@
 micronaut:
   application:
     name: rest
+  server:
+    port: 8080
+#mongodb:
+#  uri: mongodb://localhost:27017/humans
 mongodb:
-  uri: mongodb://localhost:27017/humans
+  host: mongodb

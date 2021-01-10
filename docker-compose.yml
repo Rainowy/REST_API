@@ -17,9 +17,10 @@ services:
       - api-bridge
 
   rest:
-    build:
-      context: .
-    container_name: rest_api
+#    build:
+#      context: .
+#    container_name: rest_api
+    image: rainowy/rest-app
     ports:
       - 8080:8080
     restart: on-failure
@@ -28,7 +29,7 @@ services:
       - mongo-seed
     networks:
       - api-bridge
-    entrypoint: ./entrypoint.sh
+#    entrypoint: ./entrypoint.sh.bak
 
   mongo-seed:
     build: ./mongo-seed
