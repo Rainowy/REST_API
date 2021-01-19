@@ -4,6 +4,7 @@ import com.example.Dto.Person;
 import com.mongodb.client.model.*;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
+import com.mongodb.reactivestreams.client.MongoCollection;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.validation.Validated;
@@ -12,6 +13,11 @@ import io.reactivex.Single;
 import org.bson.conversions.Bson;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 @Controller("/people")
 @Validated
@@ -23,9 +29,11 @@ public class PersonController implements Crudable {
     private static final String age = "age";
 
     private final MongoRepository mongoRepository;
+    private final AnalyticsClient analyticsClient;
 
-    public PersonController(MongoRepository mongoRepository) {
+    public PersonController(MongoRepository mongoRepository, AnalyticsClient analyticsClient) {
         this.mongoRepository = mongoRepository;
+        this.analyticsClient = analyticsClient;
     }
 
     @Override
@@ -43,6 +51,8 @@ public class PersonController implements Crudable {
         return Flowable.fromPublisher(mongoRepository.getCollection()
                 .find())
                 .map(Person::hidePassword);
+//                .publish();
+
     }
 
     @Override
@@ -57,13 +67,28 @@ public class PersonController implements Crudable {
 
     @Override
     public Flowable<Person> findById(Long id) {
+
+//        List<Person> ludzie = new ArrayList<>();
+//
+//        MongoCollection<Person> collection = mongoRepository.getCollection();
+
+
+
+
         return Flowable.fromPublisher(mongoRepository.getCollection()
                 .find(Filters.eq(id)))
                 .map(Person::hidePassword);
+
+//                .collect(Collectors.toList());
+
     }
 
     @Override
     public Flowable<DeleteResult> deleteOne(String name) {
+
+
+
+
         Bson filter = Filters.eq(this.name, name);
         return Flowable.fromPublisher(mongoRepository.getCollection().deleteOne(filter));
     }

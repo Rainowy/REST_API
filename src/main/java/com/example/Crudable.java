@@ -3,12 +3,15 @@ package com.example;
 import com.example.Dto.Person;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
+import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Delete;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
 import io.micronaut.http.annotation.Put;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
+
+import java.util.function.Consumer;
 
 public interface Crudable {
 
