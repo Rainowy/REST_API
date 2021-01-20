@@ -2,8 +2,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>rain.people</groupId>
-  <artifactId>people</artifactId>
+  <groupId>people.analytics</groupId>
+  <artifactId>people-analytics</artifactId>
   <version>0.1</version>
 
   <parent>
@@ -14,12 +14,10 @@
 
   <properties>
     <jdk.version>11</jdk.version>
-    <release.version>11</release.version>
+    <!-- If you are building with JDK 9 or higher, you can uncomment the lines below to set the release version -->
+     <release.version>11</release.version>
     <micronaut.version>2.0.3</micronaut.version>
-    <lombok.version>1.18.16</lombok.version>
-    <maven-failsafe-plugin.version>3.0.0-M5</maven-failsafe-plugin.version>
-    <jib.version>2.5.0</jib.version>
-    <exec.mainClass>rain.people.Application</exec.mainClass>
+    <exec.mainClass>people.analytics.Application</exec.mainClass>
   </properties>
 
   <repositories>
@@ -57,11 +55,6 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>javax.annotation</groupId>
-      <artifactId>javax.annotation-api</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
       <scope>runtime</scope>
@@ -81,36 +74,15 @@
       <artifactId>micronaut-test-junit5</artifactId>
       <scope>test</scope>
     </dependency>
-    <!--    Added by Tomek-->
-    <dependency>
-      <groupId>io.micronaut.mongodb</groupId>
-      <artifactId>micronaut-mongo-reactive</artifactId>
-    </dependency>
     <dependency>
       <groupId>io.micronaut.rabbitmq</groupId>
       <artifactId>micronaut-rabbitmq</artifactId>
       <scope>compile</scope>
     </dependency>
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <version>${lombok.version}</version>
-      <scope>provided</scope>
-    </dependency>
   </dependencies>
 
   <build>
     <plugins>
-      <plugin>
-        <groupId>com.google.cloud.tools</groupId>
-        <artifactId>jib-maven-plugin</artifactId>
-        <version>${jib.version}</version>
-        <configuration>
-          <to>
-            <image>registry.hub.docker.com/rainowy/rest-app</image>
-          </to>
-        </configuration>
-      </plugin>
       <plugin>
         <groupId>io.micronaut.build</groupId>
         <artifactId>micronaut-maven-plugin</artifactId>
@@ -122,7 +94,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-failsafe-plugin</artifactId>
-        <version>${maven-failsafe-plugin.version}</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -131,11 +102,6 @@
           <!-- Uncomment to enable incremental compilation -->
           <!-- <useIncrementalCompilation>false</useIncrementalCompilation> -->
           <annotationProcessorPaths>
-            <path>
-              <groupId>org.projectlombok</groupId>
-              <artifactId>lombok</artifactId>
-              <version>${lombok.version}</version>
-            </path>
             <path>
               <groupId>io.micronaut</groupId>
               <artifactId>micronaut-inject-java</artifactId>
@@ -148,8 +114,8 @@
             </path>
           </annotationProcessorPaths>
           <compilerArgs>
-            <arg>-Amicronaut.processing.group=com.example</arg>
-            <arg>-Amicronaut.processing.module=demo</arg>
+            <arg>-Amicronaut.processing.group=people.analytics</arg>
+            <arg>-Amicronaut.processing.module=people-analytics</arg>
           </compilerArgs>
         </configuration>
         <executions>
@@ -160,11 +126,6 @@
             </goals>
             <configuration>
               <annotationProcessorPaths>
-                <path>
-                  <groupId>org.projectlombok</groupId>
-                  <artifactId>lombok</artifactId>
-                  <version>${lombok.version}</version>
-                </path>
                 <path>
                   <groupId>io.micronaut</groupId>
                   <artifactId>micronaut-inject-java</artifactId>
@@ -182,4 +143,6 @@
       </plugin>
     </plugins>
   </build>
+
+
 </project>

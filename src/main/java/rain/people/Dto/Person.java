@@ -1,6 +1,5 @@
-package com.example.Dto;
+package rain.people.Dto;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.micronaut.core.annotation.Introspected;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
-@JsonSerialize
+
 @Getter
 @Setter
 @Introspected

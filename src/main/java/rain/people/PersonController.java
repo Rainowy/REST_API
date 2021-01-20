@@ -1,23 +1,16 @@
-package com.example;
+package rain.people;
 
-import com.example.Dto.Person;
+import rain.people.Dto.Person;
 import com.mongodb.client.model.*;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
-import com.mongodb.reactivestreams.client.MongoCollection;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.validation.Validated;
 import io.reactivex.Flowable;
-import io.reactivex.Single;
 import org.bson.conversions.Bson;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 @Controller("/people")
 @Validated
@@ -37,13 +30,20 @@ public class PersonController implements Crudable {
     }
 
     @Override
-    public Single<Person> addOne(@Body @Valid Person person) {
+    public Flowable<@Valid Person> addOne(@Body @Valid Person person) {
 
         person.setId(mongoRepository.getNextSequence("userid", true));
-        return Single.fromPublisher(
-                mongoRepository.getCollection()
-                        .insertOne(person))
+//        Single.fromPublisher(mongoRepository.getCollection().insertOne(person));
+        return
+
+//                findByName(person.getName(),0,0,"ASC");
+
+                 Flowable.fromPublisher(mongoRepository.getCollection()
+                .insertOne(person))
                 .map(success -> person);
+
+
+
     }
 
     @Override

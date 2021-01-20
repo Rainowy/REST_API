@@ -1,7 +1,7 @@
-package com.example;
+package rain.people;
 
-import com.example.Dto.Counters;
-import com.example.Dto.Person;
+import rain.people.Dto.Counters;
+import rain.people.Dto.Person;
 import com.mongodb.BasicDBObject;
 import com.mongodb.reactivestreams.client.MongoClient;
 import com.mongodb.reactivestreams.client.MongoCollection;
@@ -44,6 +44,7 @@ public class MongoRepository {
                 .map(Counters::getSeq)
                 .blockingFirst();
     }
+
 
     public Long findCountersMaxId() {
         return Flowable.fromPublisher(getCountersCollection()

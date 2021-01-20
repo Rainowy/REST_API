@@ -1,22 +1,20 @@
-package com.example;
+package rain.people;
 
-import com.example.Dto.Person;
+import rain.people.Dto.Person;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
-import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Delete;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
 import io.micronaut.http.annotation.Put;
 import io.reactivex.Flowable;
-import io.reactivex.Single;
 
-import java.util.function.Consumer;
+import javax.validation.Valid;
 
 public interface Crudable {
 
-    @Post
-    Single<Person> addOne (Person person) throws Exception;
+@Post
+Flowable<@Valid Person> addOne (Person person) throws Exception;
     @Get
     Flowable<Person> findAll();
     @Get("/{name}")

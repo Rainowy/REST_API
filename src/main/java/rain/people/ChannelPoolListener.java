@@ -1,4 +1,4 @@
-package com.example;
+package rain.people;
 
 import com.rabbitmq.client.BuiltinExchangeType;
 import com.rabbitmq.client.Channel;

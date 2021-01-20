@@ -1,10 +1,11 @@
-package com.example;
+package rain.people;
 
-import com.example.Dto.Person;
+import rain.people.Dto.Person;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.client.RxHttpClient;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.http.client.exceptions.HttpClientResponseException;
+import io.micronaut.runtime.EmbeddedApplication;
 import io.micronaut.test.annotation.MicronautTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -21,6 +22,13 @@ public class PersonControllerTest {
     RxHttpClient client;
     @Inject
     MongoRepository mongoRepository;
+    @Inject
+    EmbeddedApplication application;
+
+    @Test
+    void testItWorks() {
+        Assertions.assertTrue(application.isRunning());
+    }
 
     @Test
     public void testAdd() {

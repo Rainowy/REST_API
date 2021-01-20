@@ -5,6 +5,7 @@ micronaut:
     port: 8080
 mongodb:
   uri: mongodb://localhost:27017/humans
+#  auto-index-creation: false
 #mongodb:
 #  host: mongodb
 endpoints:

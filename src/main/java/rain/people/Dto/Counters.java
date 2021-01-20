@@ -1,4 +1,4 @@
-package com.example.Dto;
+package rain.people.Dto;
 
 import io.micronaut.core.annotation.Introspected;
 import lombok.Getter;
