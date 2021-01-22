@@ -1,9 +1,11 @@
 package people.analytics;
 
 import io.micronaut.core.annotation.Introspected;
+import lombok.Data;
 
 import java.util.List;
 
+@Data
 @Introspected
 public class PersonAnalytics {
 
@@ -12,22 +14,6 @@ public class PersonAnalytics {
 
     public PersonAnalytics(List<List<Person>> people, String timeAdded) {
         this.people = people;
-        this.timeAdded = timeAdded;
-    }
-
-    public List<List<Person>> getPeople() {
-        return people;
-    }
-
-    public void setPeople(List<List<Person>> people) {
-        this.people = people;
-    }
-
-    public String getTimeAdded() {
-        return timeAdded;
-    }
-
-    public void setTimeAdded(String timeAdded) {
         this.timeAdded = timeAdded;
     }
 }

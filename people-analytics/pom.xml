@@ -14,10 +14,10 @@
 
   <properties>
     <jdk.version>11</jdk.version>
-    <!-- If you are building with JDK 9 or higher, you can uncomment the lines below to set the release version -->
      <release.version>11</release.version>
     <micronaut.version>2.0.3</micronaut.version>
     <lombok.version>1.18.16</lombok.version>
+    <jib.version>2.5.0</jib.version>
     <exec.mainClass>people.analytics.Application</exec.mainClass>
   </properties>
 
@@ -91,6 +91,16 @@
   <build>
     <plugins>
       <plugin>
+        <groupId>com.google.cloud.tools</groupId>
+        <artifactId>jib-maven-plugin</artifactId>
+        <version>${jib.version}</version>
+        <configuration>
+          <to>
+            <image>registry.hub.docker.com/rainowy/people-analytics</image>
+          </to>
+        </configuration>
+      </plugin>
+      <plugin>
         <groupId>io.micronaut.build</groupId>
         <artifactId>micronaut-maven-plugin</artifactId>
       </plugin>
@@ -109,6 +119,12 @@
           <!-- Uncomment to enable incremental compilation -->
           <!-- <useIncrementalCompilation>false</useIncrementalCompilation> -->
           <annotationProcessorPaths>
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>${lombok.version}</version>
+            </path>
+
             <path>
               <groupId>io.micronaut</groupId>
               <artifactId>micronaut-inject-java</artifactId>
@@ -133,6 +149,11 @@
             </goals>
             <configuration>
               <annotationProcessorPaths>
+                <path>
+                  <groupId>org.projectlombok</groupId>
+                  <artifactId>lombok</artifactId>
+                  <version>${lombok.version}</version>
+                </path>
                 <path>
                   <groupId>io.micronaut</groupId>
                   <artifactId>micronaut-inject-java</artifactId>

@@ -107,7 +107,7 @@
         <version>${jib.version}</version>
         <configuration>
           <to>
-            <image>registry.hub.docker.com/rainowy/rest-app</image>
+            <image>registry.hub.docker.com/rainowy/people</image>
           </to>
         </configuration>
       </plugin>
