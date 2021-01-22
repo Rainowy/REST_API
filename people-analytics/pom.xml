@@ -17,6 +17,7 @@
     <!-- If you are building with JDK 9 or higher, you can uncomment the lines below to set the release version -->
      <release.version>11</release.version>
     <micronaut.version>2.0.3</micronaut.version>
+    <lombok.version>1.18.16</lombok.version>
     <exec.mainClass>people.analytics.Application</exec.mainClass>
   </properties>
 
@@ -78,6 +79,12 @@
       <groupId>io.micronaut.rabbitmq</groupId>
       <artifactId>micronaut-rabbitmq</artifactId>
       <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>${lombok.version}</version>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 

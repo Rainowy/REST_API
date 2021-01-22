@@ -1,8 +1,9 @@
 package people.analytics;
 
 import javax.inject.Singleton;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -11,14 +12,19 @@ import java.util.stream.Collectors;
 @Singleton
 public class AnalyticsService {
 
-    private final Map<List<List<Person>>, LocalTime> personAnalytics = new ConcurrentHashMap<>();
+    private final Map<List<List<Person>>, String> personAnalytics = new ConcurrentHashMap<>();
 
     public void updatePeopleAnalytics(List<List<Person>> person) {
 
+        LocalDate anotherSummerDay = LocalDate.now();
+        LocalTime anotherTime = LocalTime.now();
+        ZonedDateTime zonedDateTime = ZonedDateTime.of(anotherSummerDay, anotherTime, ZoneId.of("Europe/Helsinki"));
+        String format = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
+                .format(zonedDateTime);
+
         personAnalytics.compute(person, (p, v) -> {
-            v = LocalTime.now();
             if (v == null) {
-                return LocalTime.now();
+                return format;
             } else {
                 return v;
             }
@@ -26,7 +32,7 @@ public class AnalyticsService {
 
     }
 
-    public List<PersonAnalytics> show() {
+    public List<PersonAnalytics> showAnalytics() {
         return personAnalytics.entrySet().stream()
                 .map(p -> new PersonAnalytics(p.getKey(), p.getValue()))
                 .collect(Collectors.toList());

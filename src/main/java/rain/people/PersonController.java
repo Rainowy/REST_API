@@ -16,103 +16,45 @@ import javax.validation.Valid;
 @Validated
 public class PersonController implements Crudable {
 
-    private static final String id = "_id";
-    private static final String name = "name";
-    private static final String password = "password";
-    private static final String age = "age";
+   private final MongoRepository mongoRepository;
 
-    private final MongoRepository mongoRepository;
-    private final AnalyticsClient analyticsClient;
-
-    public PersonController(MongoRepository mongoRepository, AnalyticsClient analyticsClient) {
+    public PersonController(MongoRepository mongoRepository) {
         this.mongoRepository = mongoRepository;
-        this.analyticsClient = analyticsClient;
     }
 
     @Override
-    public Flowable<@Valid Person> addOne(@Body @Valid Person person) {
-
-        person.setId(mongoRepository.getNextSequence("userid", true));
-//        Single.fromPublisher(mongoRepository.getCollection().insertOne(person));
-        return
-
-//                findByName(person.getName(),0,0,"ASC");
-
-                 Flowable.fromPublisher(mongoRepository.getCollection()
-                .insertOne(person))
-                .map(success -> person);
-
-
-
+    public Flowable<Person> addOne(@Body @Valid Person person) {
+        return mongoRepository.addOne(person);
     }
 
     @Override
     public Flowable<Person> findAll() {
-        return Flowable.fromPublisher(mongoRepository.getCollection()
-                .find())
-                .map(Person::hidePassword);
-//                .publish();
-
+        return mongoRepository.findAll();
     }
 
     @Override
     public Flowable<Person> findByName(String name, int pageSize, int pageNumber, String sortOrder) {
-        return Flowable.fromPublisher(mongoRepository.getCollection()
-                .find(Filters.eq(this.name, name))
-                .sort(sortOrder.isEmpty() ? (Sorts.ascending(id)) : Sorts.descending(id))
-                .skip(pageNumber <= 0 ? (0) : pageNumber)
-                .limit(pageSize <= 0 ? (0) : pageSize))
-                .map(Person::hidePassword);
+        return mongoRepository.findByName(name, pageSize, pageNumber, sortOrder);
     }
 
     @Override
     public Flowable<Person> findById(Long id) {
-
-//        List<Person> ludzie = new ArrayList<>();
-//
-//        MongoCollection<Person> collection = mongoRepository.getCollection();
-
-
-
-
-        return Flowable.fromPublisher(mongoRepository.getCollection()
-                .find(Filters.eq(id)))
-                .map(Person::hidePassword);
-
-//                .collect(Collectors.toList());
-
+        return mongoRepository.findById(id);
     }
 
     @Override
     public Flowable<DeleteResult> deleteOne(String name) {
-
-
-
-
-        Bson filter = Filters.eq(this.name, name);
-        return Flowable.fromPublisher(mongoRepository.getCollection().deleteOne(filter));
+        return mongoRepository.deleteOne(name);
     }
 
     @Override
     public Flowable<UpdateResult> updateMany(String name, @Body @Valid Person person) {
-        return Flowable.fromPublisher(mongoRepository.getCollection().updateMany(
-                Filters.eq(this.name, name),
-                Updates.combine(
-                        Updates.set(this.name, person.getName()),
-                        Updates.set(password, person.getPassword()),
-                        Updates.set(age, person.getAge()))
-        ));
+        return mongoRepository.updateMany(name, person);
     }
 
     @Override
     public Flowable<UpdateResult> updateById(@Body @Valid Person person) {
-        return Flowable.fromPublisher(mongoRepository.getCollection().updateOne(
-                Filters.eq(person.getId()),
-                Updates.combine(
-                        Updates.set(name, person.getName()),
-                        Updates.set(password, person.getPassword()),
-                        Updates.set(age, person.getAge()))
-        ));
+        return mongoRepository.updateById(person);
     }
 }
 

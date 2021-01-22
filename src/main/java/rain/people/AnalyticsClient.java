@@ -13,5 +13,5 @@ import java.util.List;
 public interface AnalyticsClient {
 
     @Binding("analytics")
-    void updateAnalytics(List<List<Person>> request);
+    void updateAnalytics(List<Person> request);
 }

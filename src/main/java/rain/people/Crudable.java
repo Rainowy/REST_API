@@ -13,18 +13,24 @@ import javax.validation.Valid;
 
 public interface Crudable {
 
-@Post
-Flowable<@Valid Person> addOne (Person person) throws Exception;
+    @Post
+    Flowable<@Valid Person> addOne(Person person) throws Exception;
+
     @Get
     Flowable<Person> findAll();
+
     @Get("/{name}")
     Flowable<Person> findByName(String name, int pageSize, int pageNumber, String sort);
+
     @Get("/id")
     Flowable<Person> findById(Long id);
+
     @Put("/{name}")
     Flowable<UpdateResult> updateMany(String name, Person person);
+
     @Put("/update")
     Flowable<UpdateResult> updateById(Person person);
+
     @Delete("/{name}")
     Flowable<DeleteResult> deleteOne(String name);
 }

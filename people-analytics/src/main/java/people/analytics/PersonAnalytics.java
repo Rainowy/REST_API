@@ -1,16 +1,18 @@
 package people.analytics;
 
-import java.time.LocalTime;
+import io.micronaut.core.annotation.Introspected;
+
 import java.util.List;
 
+@Introspected
 public class PersonAnalytics {
 
     private List<List<Person>> people;
-    private LocalTime timeAdded;
+    private String timeAdded;
 
-    public PersonAnalytics(List<List<Person>> people, LocalTime localTime) {
+    public PersonAnalytics(List<List<Person>> people, String timeAdded) {
         this.people = people;
-        this.timeAdded = localTime;
+        this.timeAdded = timeAdded;
     }
 
     public List<List<Person>> getPeople() {
@@ -21,11 +23,11 @@ public class PersonAnalytics {
         this.people = people;
     }
 
-    public LocalTime getTimeAdded() {
+    public String getTimeAdded() {
         return timeAdded;
     }
 
-    public void setTimeAdded(LocalTime timeAdded) {
+    public void setTimeAdded(String timeAdded) {
         this.timeAdded = timeAdded;
     }
 }

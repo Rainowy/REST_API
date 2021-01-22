@@ -16,7 +16,7 @@ import java.util.Optional;
 
 
 @Requires(notEnv = Environment.TEST)
-@Filter("/**") //wszystko na localhost:8080 aktywuje filter
+@Filter("/people/**") //wszystko na localhost:8080 aktywuje filter
 public class AnalyticsFilter implements HttpServerFilter {
 
     private final AnalyticsClient analyticsClient;
@@ -27,16 +27,22 @@ public class AnalyticsFilter implements HttpServerFilter {
 
     @Override
     public Publisher<MutableHttpResponse<?>> doFilter(HttpRequest<?> request, ServerFilterChain chain) {
-
         return Flowable
                 .fromPublisher(chain.proceed(request))
                 .flatMap(response ->
                         Flowable.fromCallable(() -> {
-                            Optional<Flowable<List<Person>>> person = (Optional<Flowable<List<Person>>>) response.getBody();
-                            person.ifPresent(personFlowable ->
-                                    analyticsClient.updateAnalytics(personFlowable.toList().blockingGet()));
 
-                            return response;
+                            Optional<String> body = request.getBody(String.class);
+
+                            if (body.isPresent()) {
+                                return response;
+
+                            } else {
+                                Optional<Flowable<Person>> person = (Optional<Flowable<Person>>) response.getBody();
+                                person.ifPresent(personFlowable ->
+                                        analyticsClient.updateAnalytics(personFlowable.toList().blockingGet()));
+                                return response;
+                            }
                         }));
     }
 }

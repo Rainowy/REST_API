@@ -1,16 +1,11 @@
 package rain.people.Dto;
 
 import io.micronaut.core.annotation.Introspected;
-import lombok.Getter;
-import lombok.Setter;
-
+import lombok.Data;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Objects;
 
-
-@Getter
-@Setter
+@Data
 @Introspected
 public class Person {
 
@@ -26,31 +21,5 @@ public class Person {
     public static Person hidePassword(Person person) {
         person.setPassword(person.getPassword().replaceAll(".", "*"));
         return person;
-    }
-
-    @Override
-    public String toString() {
-        return "Person{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", password='" + password + '\'' +
-                ", age=" + age +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Person person = (Person) o;
-        return age == person.age &&
-                Objects.equals(id, person.id) &&
-                Objects.equals(name, person.name) &&
-                Objects.equals(password, person.password);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, password, age);
     }
 }
