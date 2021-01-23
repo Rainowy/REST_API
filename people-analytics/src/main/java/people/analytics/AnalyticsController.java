@@ -16,7 +16,7 @@ public class AnalyticsController {
 
     @Get()
     public List<PersonAnalytics> listAnalytics() {
-     return   analyticsService.showAnalytics();
+     return   analyticsService.listAnalytics();
     }
 }
 

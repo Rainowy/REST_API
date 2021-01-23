@@ -33,7 +33,7 @@ public class AnalyticsFilter implements HttpServerFilter {
                             if (body.isPresent()) {
                                 return response;
                             } else {
-                                Optional<Flowable<List<Person>>> person = (Optional<Flowable<List<Person>>>) response.getBody();
+                                Optional<Flowable<Person>> person = (Optional<Flowable<Person>>) response.getBody();
                                 person.ifPresent(personFlowable ->
                                         analyticsClient.updateAnalytics(personFlowable.toList().blockingGet()));
                                 return response;

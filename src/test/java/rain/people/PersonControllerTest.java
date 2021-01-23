@@ -22,13 +22,6 @@ public class PersonControllerTest {
     RxHttpClient client;
     @Inject
     MongoRepository mongoRepository;
-    @Inject
-    EmbeddedApplication application;
-
-    @Test
-    void testItWorks() {
-        Assertions.assertTrue(application.isRunning());
-    }
 
     @Test
     public void testAdd() {

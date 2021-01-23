@@ -12,9 +12,9 @@ import java.util.stream.Collectors;
 @Singleton
 public class AnalyticsService {
 
-    private final Map<List<List<Person>>, String> personAnalytics = new ConcurrentHashMap<>();
+    private final Map<List<Person>, String> personAnalytics = new ConcurrentHashMap<>();
 
-    public void updatePeopleAnalytics(List<List<Person>> person) {
+    public void updatePeopleAnalytics(List<Person> person) {
 
         LocalDate anotherSummerDay = LocalDate.now();
         LocalTime anotherTime = LocalTime.now();
@@ -32,8 +32,10 @@ public class AnalyticsService {
 
     }
 
-    public List<PersonAnalytics> showAnalytics() {
-        return personAnalytics.entrySet().stream()
+    public List<PersonAnalytics> listAnalytics() {
+        return personAnalytics
+                .entrySet()
+                .stream()
                 .map(p -> new PersonAnalytics(p.getKey(), p.getValue()))
                 .collect(Collectors.toList());
     }

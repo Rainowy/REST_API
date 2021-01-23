@@ -18,7 +18,7 @@ public class AnalyticsListener {
     }
 
     @Queue("analytics")
-    public void updateAnalytics(List<List<Person>> person) {
+    public void updateAnalytics(List<Person> person) {
         analyticsService.updatePeopleAnalytics(person);
     }
 }

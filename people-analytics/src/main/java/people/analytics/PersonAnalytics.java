@@ -9,10 +9,10 @@ import java.util.List;
 @Introspected
 public class PersonAnalytics {
 
-    private List<List<Person>> people;
+    private List<Person> people;
     private String timeAdded;
 
-    public PersonAnalytics(List<List<Person>> people, String timeAdded) {
+    public PersonAnalytics(List<Person> people, String timeAdded) {
         this.people = people;
         this.timeAdded = timeAdded;
     }
