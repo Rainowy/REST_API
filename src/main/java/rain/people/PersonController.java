@@ -1,16 +1,14 @@
 package rain.people;
 
 import rain.people.Dto.Person;
-import com.mongodb.client.model.*;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.validation.Validated;
 import io.reactivex.Flowable;
-import org.bson.conversions.Bson;
-
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller("/people")
 @Validated
@@ -33,12 +31,12 @@ public class PersonController implements Crudable {
     }
 
     @Override
-    public Flowable<Person> findByName(String name, int pageSize, int pageNumber, String sortOrder) {
-        return mongoRepository.findByName(name, pageSize, pageNumber, sortOrder);
+    public Flowable<Person> findByName(String name, Integer pageSize, Optional<Integer> pageNumber, Optional<String> sortDesc) {
+        return mongoRepository.findByName(name, pageSize, pageNumber, sortDesc);
     }
 
     @Override
-    public Flowable<Person> findById(Long id) {
+    public Flowable<Person> findById(Optional<Long> id) {
         return mongoRepository.findById(id);
     }
 

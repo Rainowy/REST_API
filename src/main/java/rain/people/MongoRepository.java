@@ -9,13 +9,16 @@ import com.mongodb.client.result.UpdateResult;
 import com.mongodb.reactivestreams.client.MongoClient;
 import com.mongodb.reactivestreams.client.MongoCollection;
 import io.micronaut.http.annotation.Body;
+import io.micronaut.http.annotation.Filter;
+import io.micronaut.http.annotation.RequestAttribute;
 import io.reactivex.Flowable;
 import org.bson.conversions.Bson;
 import rain.people.Dto.Counters;
 import rain.people.Dto.Person;
-
 import javax.inject.Singleton;
 import javax.validation.Valid;
+
+import java.util.Optional;
 
 import static com.mongodb.client.model.Filters.eq;
 
@@ -58,18 +61,18 @@ public class MongoRepository {
                 .map(Person::hidePassword);
     }
 
-    public Flowable<Person> findByName(String name, int pageSize, int pageNumber, String sortOrder) {
+    public Flowable<Person> findByName(String name, Integer pageSize, Optional<Integer> pageNumber, Optional<String> sortDesc) {
         return Flowable.fromPublisher(getCollection()
                 .find(Filters.eq(this.name, name))
-                .sort(sortOrder.isEmpty() ? (Sorts.ascending(id)) : Sorts.descending(id))
-                .skip(pageNumber <= 0 ? (0) : pageNumber)
-                .limit(pageSize <= 0 ? (0) : pageSize))
+                .sort(sortDesc.isPresent() ? (Sorts.descending(id)) : Sorts.ascending(id))
+                .skip(pageNumber.isEmpty() ? (0) : pageNumber.get())
+                .limit(pageSize == null ? (0) : pageSize))
                 .map(Person::hidePassword);
     }
 
-    public Flowable<Person> findById(Long id) {
+    public Flowable<Person> findById(Optional<Long> id) {
         return Flowable.fromPublisher(getCollection()
-                .find(Filters.eq(id)))
+                .find(id.isPresent() ? Filters.eq(this.id, id.get()) : Filters.eq(this.id, 1)))
                 .map(Person::hidePassword);
     }
 

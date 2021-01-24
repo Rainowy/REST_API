@@ -10,11 +10,10 @@ import io.micronaut.http.filter.HttpServerFilter;
 import io.micronaut.http.filter.ServerFilterChain;
 import io.reactivex.Flowable;
 import org.reactivestreams.Publisher;
-import java.util.List;
 import java.util.Optional;
 
 @Requires(notEnv = Environment.TEST)
-@Filter("/people/**")
+@Filter("/people/?*")
 public class AnalyticsFilter implements HttpServerFilter {
 
     private final AnalyticsClient analyticsClient;
@@ -29,6 +28,7 @@ public class AnalyticsFilter implements HttpServerFilter {
                 .fromPublisher(chain.proceed(request))
                 .flatMap(response ->
                         Flowable.fromCallable(() -> {
+
                             Optional<String> body = request.getBody(String.class);
                             if (body.isPresent()) {
                                 return response;

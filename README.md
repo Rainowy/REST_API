@@ -1,11 +1,12 @@
 # REST_API
 
-> Simple Microservice using Java 13, Micronaut and MongoDB database
+> Simple Microservice written in Java 11.
 
-- I am using docker compose to run mongo and micronaut containers from localhost.
-- First build jar with  **mvn package  -Dmaven.test.skip=true**
-- Next build docker image from jar  **docker build -t api-docker-image .**
-- Next use **docker-compose up** and it should be going.
+> Technologies
+>
+- Micronaut
+- MongoDB
+- RabbitMQ
 
 > SIMPLE CRUD (use Postman)
 - http://localhost:8080/people/
@@ -35,7 +36,7 @@
      "age": "16"
  } 
 
-> I Made testing with K6 framework from docker. Thats, why URL in K6_GET_test.js and K6_POST_test.js in those files is changed to 172.17.0.1 (docker internal ip)
+> I Made testing with K6 framework from docker. Thats, why URL in K6_GET_test.js and K6_test.js in those files is changed to 172.17.0.1 (docker internal ip)
 I was running K6 from terminal with this command:
 -  docker run -i loadimpact/k6 run --vus 1000 --iterations 10000 - <K6_GET_test.js
 
