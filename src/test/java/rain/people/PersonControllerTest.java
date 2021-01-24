@@ -5,7 +5,6 @@ import io.micronaut.http.HttpRequest;
 import io.micronaut.http.client.RxHttpClient;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.http.client.exceptions.HttpClientResponseException;
-import io.micronaut.runtime.EmbeddedApplication;
 import io.micronaut.test.annotation.MicronautTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

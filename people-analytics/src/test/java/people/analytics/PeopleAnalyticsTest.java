@@ -58,12 +58,11 @@ public class PeopleAnalyticsTest {
 
         Optional<List<Person>> firstEntry = getPeople(analytics);
 
-        return
-                firstEntry.get()
-                        .stream()
-                        .filter(person -> person.getName().equals(p.getName()))
-                        .findFirst()
-                        .orElseThrow(() -> new RuntimeException("People not found"));
+        return firstEntry.get()
+                .stream()
+                .filter(person -> person.getName().equals(p.getName()))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("People not found"));
     }
 
     private Optional<List<Person>> getPeople(List<PersonAnalytics> analytics) {
