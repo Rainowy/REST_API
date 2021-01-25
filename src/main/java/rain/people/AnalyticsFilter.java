@@ -30,14 +30,12 @@ public class AnalyticsFilter implements HttpServerFilter {
                         Flowable.fromCallable(() -> {
 
                             Optional<String> body = request.getBody(String.class);
-                            if (body.isPresent()) {
-                                return response;
-                            } else {
+                            if (body.isEmpty()) {
                                 Optional<Flowable<Person>> person = (Optional<Flowable<Person>>) response.getBody();
                                 person.ifPresent(personFlowable ->
                                         analyticsClient.updateAnalytics(personFlowable.toList().blockingGet()));
-                                return response;
                             }
+                            return response;
                         }));
     }
 }
