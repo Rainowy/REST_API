@@ -3,6 +3,5 @@ micronaut:
     name: peopleAnalytics
   server:
     port: 8081
-rabbitmq:
+#rabbitmq:
 #    uri: amqp://localhost:5672
-  host: rabbitmq
