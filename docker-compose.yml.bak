@@ -26,19 +26,16 @@ services:
       - api-bridge
 
   rest:
-    build:
-      context: .
-    container_name: rest_api
+    image: registry.hub.docker.com/rainowy/people
     ports:
       - 8080:8080
     restart: on-failure
     depends_on:
+      - rabbitmq
       - mongodb
       - mongo-seed
     networks:
       - api-bridge
-#    entrypoint: ./entrypoint.sh
-    entrypoint: ./waitForRabbit.sh
 
   analytics:
     image: registry.hub.docker.com/rainowy/people-analytics

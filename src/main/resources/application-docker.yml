@@ -1,2 +1,5 @@
-#mongodb:
-#  host: mongodb
+mongodb:
+  host: mongodb
+
+rabbitmq:
+  host: rabbitmq

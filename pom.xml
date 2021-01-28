@@ -101,16 +101,16 @@
 
   <build>
     <plugins>
-      <plugin>
-        <groupId>com.google.cloud.tools</groupId>
-        <artifactId>jib-maven-plugin</artifactId>
-        <version>${jib.version}</version>
-        <configuration>
-          <to>
-            <image>registry.hub.docker.com/rainowy/people</image>
-          </to>
-        </configuration>
-      </plugin>
+<!--      <plugin>-->
+<!--        <groupId>com.google.cloud.tools</groupId>-->
+<!--        <artifactId>jib-maven-plugin</artifactId>-->
+<!--        <version>${jib.version}</version>-->
+<!--        <configuration>-->
+<!--          <to>-->
+<!--            <image>registry.hub.docker.com/rainowy/people</image>-->
+<!--          </to>-->
+<!--        </configuration>-->
+<!--      </plugin>-->
       <plugin>
         <groupId>io.micronaut.build</groupId>
         <artifactId>micronaut-maven-plugin</artifactId>

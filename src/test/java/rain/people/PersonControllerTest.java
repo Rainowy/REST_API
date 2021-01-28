@@ -74,6 +74,18 @@ public class PersonControllerTest {
         assertEquals(mongoRepository.findCountersMaxId() -1, findAllPeople().length);
     }
 
+    @Test
+    public void testEndpoint(){
+        String endpoint = client.toBlocking().retrieve(HttpRequest.GET("/people/tester"), String.class);
+        Assertions.assertNotNull(endpoint);
+    }
+
+    @Test
+    public void checkIfWrongEndpointThrowsException(){
+        Exception exception = assertThrows(HttpClientResponseException.class, () -> client.toBlocking().retrieve(HttpRequest.GET("/people/id/sd"), Person.class));
+        assertEquals("Page Not Found", exception.getMessage());
+    }
+
     public Person blankName() {
         Person person = new Person();
         person.setName(null);

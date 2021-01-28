@@ -1,6 +1,10 @@
 package people.analytics;
 
+import io.micronaut.http.HttpRequest;
+import io.micronaut.http.client.RxHttpClient;
+import io.micronaut.http.client.annotation.Client;
 import io.micronaut.test.annotation.MicronautTest;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import javax.inject.Inject;
@@ -13,10 +17,20 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @MicronautTest
 public class PeopleAnalyticsTest {
 
+    @Inject
+    @Client("/")
+    RxHttpClient client;
+
     private final String name = "first";
 
     @Inject
     AnalyticsService analyticsService;
+
+    @Test
+    public void testEndpoint(){
+        String endpoint = client.toBlocking().retrieve(HttpRequest.GET("/analytics"), String.class);
+        Assertions.assertNotNull(endpoint);
+    }
 
     @Test
     void updatePeopleAnalytics() {

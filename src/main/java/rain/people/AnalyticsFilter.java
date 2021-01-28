@@ -10,10 +10,11 @@ import io.micronaut.http.filter.HttpServerFilter;
 import io.micronaut.http.filter.ServerFilterChain;
 import io.reactivex.Flowable;
 import org.reactivestreams.Publisher;
+
 import java.util.Optional;
 
 @Requires(notEnv = Environment.TEST)
-@Filter("/people/?*")
+@Filter("/people/**")
 public class AnalyticsFilter implements HttpServerFilter {
 
     private final AnalyticsClient analyticsClient;
@@ -24,13 +25,14 @@ public class AnalyticsFilter implements HttpServerFilter {
 
     @Override
     public Publisher<MutableHttpResponse<?>> doFilter(HttpRequest<?> request, ServerFilterChain chain) {
+
         return Flowable
                 .fromPublisher(chain.proceed(request))
                 .flatMap(response ->
                         Flowable.fromCallable(() -> {
-
-                            Optional<String> body = request.getBody(String.class);
-                            if (body.isEmpty()) {
+                            Optional<String> httpRequest = request.getBody(String.class);
+                            Optional<String> mutableHttpResponse = response.getBody(String.class);
+                            if (!mutableHttpResponse.get().equals("Page Not Found") && httpRequest.isEmpty()) {
                                 Optional<Flowable<Person>> person = (Optional<Flowable<Person>>) response.getBody();
                                 person.ifPresent(personFlowable ->
                                         analyticsClient.updateAnalytics(personFlowable.toList().blockingGet()));
