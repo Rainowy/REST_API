@@ -26,7 +26,7 @@ services:
       - api-bridge
 
   rest:
-    image: registry.hub.docker.com/rainowy/people
+    image: registry.hub.docker.com/rainowy/people2
     container_name: people_rest
     ports:
       - 8080:8080
@@ -39,7 +39,7 @@ services:
       - api-bridge
 
   analytics:
-    image: registry.hub.docker.com/rainowy/people-analytics
+    image: registry.hub.docker.com/rainowy/people-analytics2
     container_name: people_analytics
     ports:
       - 8081:8081
@@ -51,8 +51,8 @@ services:
       - api-bridge
 
   mongo-seed:
-    image: registry.hub.docker.com/rainowy/people-mongoseed
-    container_name: people_mongoseed
+    image: registry.hub.docker.com/rainowy/people_mongoseed
+    container_name: people-mongoseed
     depends_on:
       - mongodb
     networks:

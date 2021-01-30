@@ -1,5 +1,0 @@
-mongodb:
-  host: mongodb
-
-rabbitmq:
-  host: rabbitmq

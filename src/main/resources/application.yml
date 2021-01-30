@@ -8,6 +8,12 @@ endpoints:
   health:
     enabled: true
 
+mongodb:
+  host: mongodb
+
+rabbitmq:
+  host: rabbitmq
+
 #mongodb:
 #  uri: mongodb://localhost:27017/humans
 #rabbitmq:
