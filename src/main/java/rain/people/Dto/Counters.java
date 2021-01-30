@@ -1,11 +1,11 @@
 package rain.people.Dto;
 
 import io.micronaut.core.annotation.Introspected;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 @Introspected
 public class Counters {
 

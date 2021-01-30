@@ -5,14 +5,11 @@ import rain.people.Dto.Person;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import io.reactivex.Flowable;
-
 import javax.annotation.Nullable;
 import javax.validation.Valid;
 import java.util.Optional;
-import java.util.OptionalLong;
 
 public interface Crudable {
-
 
     @Post
     Flowable<@Valid Person> addOne(Person person) throws Exception;

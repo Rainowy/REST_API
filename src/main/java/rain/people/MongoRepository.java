@@ -9,8 +9,6 @@ import com.mongodb.client.result.UpdateResult;
 import com.mongodb.reactivestreams.client.MongoClient;
 import com.mongodb.reactivestreams.client.MongoCollection;
 import io.micronaut.http.annotation.Body;
-import io.micronaut.http.annotation.Filter;
-import io.micronaut.http.annotation.RequestAttribute;
 import io.reactivex.Flowable;
 import org.bson.conversions.Bson;
 import rain.people.Dto.Counters;

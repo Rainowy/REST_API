@@ -8,7 +8,7 @@ services:
 
   rabbitmq:
     image: rabbitmq:management
-    container_name: rest-rabbit
+    container_name: people_rabbit
     ports:
       - 15672:15672
       - 5672:5672
@@ -17,7 +17,7 @@ services:
 
   mongodb:
     image: mongo:4
-    container_name: api-database
+    container_name: people_database
     ports:
       - 27017-27019:27017-27019
     volumes:
@@ -27,6 +27,7 @@ services:
 
   rest:
     image: registry.hub.docker.com/rainowy/people
+    container_name: people_rest
     ports:
       - 8080:8080
     restart: on-failure
@@ -39,6 +40,7 @@ services:
 
   analytics:
     image: registry.hub.docker.com/rainowy/people-analytics
+    container_name: people_analytics
     ports:
       - 8081:8081
     restart: on-failure
@@ -49,7 +51,8 @@ services:
       - api-bridge
 
   mongo-seed:
-    build: ./mongo-seed
+    image: registry.hub.docker.com/rainowy/people-mongoseed
+    container_name: people_mongoseed
     depends_on:
       - mongodb
     networks:

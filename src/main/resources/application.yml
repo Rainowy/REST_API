@@ -3,14 +3,12 @@ micronaut:
     name: rest
   server:
     port: 8080
-mongodb:
-  uri: mongodb://localhost:27017/humans
-#mongodb:
-#  host: mongodb
+
 endpoints:
   health:
     enabled: true
-rabbitmq:
-  uri: amqp://localhost:5672
+
+#mongodb:
+#  uri: mongodb://localhost:27017/humans
 #rabbitmq:
-#  host: rabbitmq
+#  uri: amqp://localhost:5672
