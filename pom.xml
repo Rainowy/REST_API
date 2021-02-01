@@ -106,7 +106,7 @@
         <version>${jib.version}</version>
         <configuration>
           <to>
-            <image>registry.hub.docker.com/rainowy/people2</image>
+            <image>registry.hub.docker.com/rainowy/people</image>
           </to>
         </configuration>
       </plugin>

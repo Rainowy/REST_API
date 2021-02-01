@@ -96,7 +96,7 @@
         <version>${jib.version}</version>
         <configuration>
           <to>
-            <image>registry.hub.docker.com/rainowy/people-analytics2</image>
+            <image>registry.hub.docker.com/rainowy/people_analytics</image>
           </to>
         </configuration>
       </plugin>
