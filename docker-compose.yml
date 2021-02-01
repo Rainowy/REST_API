@@ -34,14 +34,12 @@ services:
     restart: on-failure
     depends_on:
       - mongodb
-      - mongo-seed
     networks:
       - api-bridge
-#    entrypoint: ./entrypoint.sh
     entrypoint: ./waitForRabbit.sh
 
   analytics:
-    image: registry.hub.docker.com/rainowy/people-analytics
+    image: registry.hub.docker.com/rainowy/people_analytics
     ports:
       - 8081:8081
     restart: on-failure

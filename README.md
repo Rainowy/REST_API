@@ -1,14 +1,16 @@
-# REST_API
+# REST API 
 
-> Simple Microservice written in Java 11.
+> Simple Microservices written in Java 11.
 
 > Technologies
->
 - Micronaut
 - MongoDB
 - RabbitMQ
 
-> SIMPLE CRUD (use Postman)
+> How to run: (Contains Dockerfile, scripts and files required to build)
+- clone all repo
+- sudo docker-compose up
+> Publisher service
 - http://localhost:8080/people/
  {
      "name": "tester",
@@ -16,7 +18,7 @@
      "age": "16"
  }
  will save record to DB
-- http://localhost:8080/people/ without name will return all records
+- http://localhost:8080/people - return all records
 - for searching specific records type name and parameters:
  >http://localhost:8080/people/tester?pageSize=&pageNumber=&sortOrder=
 
@@ -35,13 +37,14 @@
      "password": "PassChanged",
      "age": "16"
  } 
+ 
+  > Consumer service
+ - http://localhost:8081/analytics
 
-> I Made testing with K6 framework from docker. Thats, why URL in K6_GET_test.js and K6_test.js in those files is changed to 172.17.0.1 (docker internal ip)
-I was running K6 from terminal with this command:
--  docker run -i loadimpact/k6 run --vus 1000 --iterations 10000 - <K6_GET_test.js
+> K6 tests
+-  docker run -i loadimpact/k6 run --vus 1000 --iterations 10000 - <K6_test.js
 
  
-
 
 
 
