@@ -6,6 +6,15 @@ networks:
 
 services:
 
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rest-rabbit
+    ports:
+      - 15672:15672
+      - 5672:5672
+    networks:
+      - api-bridge
+
   mongodb:
     image: mongo:4
     container_name: api-database
@@ -25,10 +34,20 @@ services:
     restart: on-failure
     depends_on:
       - mongodb
-      - mongo-seed
     networks:
       - api-bridge
-    entrypoint: ./entrypoint.sh
+    entrypoint: ./waitForRabbit.sh
+
+  analytics:
+    image: registry.hub.docker.com/rainowy/people_analytics
+    ports:
+      - 8081:8081
+    restart: on-failure
+    depends_on:
+      - rabbitmq
+      - rest
+    networks:
+      - api-bridge
 
   mongo-seed:
     build: ./mongo-seed

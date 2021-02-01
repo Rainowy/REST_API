@@ -1,6 +1,6 @@
-package com.example;
+package rain.people;
 
-import com.example.Dto.Person;
+import rain.people.Dto.Person;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.client.RxHttpClient;
 import io.micronaut.http.client.annotation.Client;
@@ -68,11 +68,23 @@ public class PersonControllerTest {
         assertEquals("person.name: must not be blank", exception.getMessage());
     }
 
-//    @Test
-//    public void testFindAll() {
-//        Person[] persons = client.toBlocking().retrieve(HttpRequest.GET("/people"), Person[].class);
-//        assertEquals(mongoRepository.findCountersMaxId() -1, findAllPeople().length);
-//    }
+    @Test
+    public void testFindAll() {
+        Person[] persons = client.toBlocking().retrieve(HttpRequest.GET("/people"), Person[].class);
+        assertEquals(mongoRepository.findCountersMaxId() -1, findAllPeople().length);
+    }
+
+    @Test
+    public void testEndpoint(){
+        String endpoint = client.toBlocking().retrieve(HttpRequest.GET("/people/tester"), String.class);
+        Assertions.assertNotNull(endpoint);
+    }
+
+    @Test
+    public void checkIfWrongEndpointThrowsException(){
+        Exception exception = assertThrows(HttpClientResponseException.class, () -> client.toBlocking().retrieve(HttpRequest.GET("/people/id/sd"), Person.class));
+        assertEquals("Page Not Found", exception.getMessage());
+    }
 
     public Person blankName() {
         Person person = new Person();
